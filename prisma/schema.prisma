@@ -14,6 +14,7 @@ model User {
   createdAt  DateTime    @default(now())
   updatedAt  DateTime    @updatedAt
   Session    Session[]
+  Meals      Meals[]
 }
 
 model Session {
@@ -23,4 +24,46 @@ model Session {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   User      User     @relation(fields: [userId], references: [id])
+}
+
+model Meals {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  name      String
+  User      User     @relation(fields: [userId], references: [id])
+  Mealfood  Mealfood[]
+}
+
+model Mealfood {
+  id        Int      @id @default(autoincrement())
+  mealId    Int
+  foodId    Int
+  quantity  Float
+  Meals     Meals   @relation(fields: [mealId], references: [id])
+}
+
+model Food {
+  id        Int      @id @default(autoincrement())
+  name      String
+  calories100g  Float
+  carb100g      Float
+  protein100g   Float
+  fat100g       Float
+}
+
+model Userinfo {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  age       Int
+  height    Int
+  weight    Float
+  goal      Goals
+}
+
+enum Goals {
+  LOSE_WEIGHT_FAST
+  LOSE_WEIGHT
+  MAINTAIN
+  GAIN_WEIGHT
+  GAIN_WEIGHT_FAST
 }
