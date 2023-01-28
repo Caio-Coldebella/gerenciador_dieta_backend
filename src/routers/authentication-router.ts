@@ -6,5 +6,5 @@ import { Router } from "express";
 const authenticationRouter = Router();
 
 authenticationRouter
-  .post("/sign-in", validateBody(signInSchema), singInPost);
+  .post("/", validateBody(signInSchema), singInPost);
 export { authenticationRouter };
