@@ -7,6 +7,7 @@ export async function usersPost(req: Request, res: Response) {
 
   try {
     const user = await userService.createUser({ email, password });
+    await userService.createDietinfo(user.id);
     return res.status(httpStatus.CREATED).json({
       id: user.id,
       email: user.email,

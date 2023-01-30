@@ -15,6 +15,7 @@ model User {
   updatedAt  DateTime    @updatedAt
   Session    Session[]
   Meals      Meals[]
+  Dietinfo   Dietinfo?
 }
 
 model Session {
@@ -39,6 +40,10 @@ model Mealfood {
   mealId    Int
   foodId    Int
   quantity  Float
+  calories  Float
+  carb      Float
+  protein   Float
+  fat       Float
   Meals     Meals   @relation(fields: [mealId], references: [id])
 }
 
@@ -58,6 +63,16 @@ model Userinfo {
   height    Int
   weight    Float
   goal      Goals
+}
+
+model Dietinfo {
+  id              Int      @id @default(autoincrement())
+  userId          Int      @unique
+  totalcalories   Float
+  totalcarb       Float
+  totalprotein    Float
+  totalfat        Float
+  User            User     @relation(fields: [userId], references: [id])
 }
 
 enum Goals {
