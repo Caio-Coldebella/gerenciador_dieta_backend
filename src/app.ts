@@ -11,6 +11,7 @@ import { handleApplicationErrors } from "@/middlewares";
 
 import {
   authenticationRouter, 
+  mealsRouter, 
   usersRouter
 } from "@/routers";
 
@@ -21,6 +22,7 @@ app
   .get("/health", (_req, res) => res.send("OK!"))
   .use("/users", usersRouter)
   .use("/auth", authenticationRouter)
+  .use("/meals", mealsRouter)
   .use(handleApplicationErrors);
 
 export function init(): Promise<Express> {

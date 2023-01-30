@@ -13,6 +13,10 @@ export async function createUser({ email, password }: CreateUserParams): Promise
   });
 }
 
+export async function createDietinfo(userId: number) {
+  return userRepository.createDietinfo(userId);
+}
+
 async function validateUniqueEmailOrFail(email: string) {
   const userWithSameEmail = await userRepository.findByEmail(email);
   if (userWithSameEmail) {
@@ -24,6 +28,7 @@ export type CreateUserParams = Pick<User, "email" | "password">;
 
 const userService = {
   createUser,
+  createDietinfo
 };
 
 export * from "./errors";
