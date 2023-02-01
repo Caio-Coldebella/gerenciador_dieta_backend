@@ -38,7 +38,7 @@ model Meals {
 model Mealfood {
   id        Int      @id @default(autoincrement())
   mealId    Int
-  foodId    Int
+  name      String
   quantity  Float
   calories  Float
   carb      Float

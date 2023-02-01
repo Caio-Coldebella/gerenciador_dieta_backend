@@ -26,3 +26,28 @@ export async function postMeal(req: AuthenticatedRequest, res: Response) {
     return res.sendStatus(httpStatus.BAD_REQUEST);
   }
 }
+
+export async function getFoodinMeal(req: AuthenticatedRequest, res: Response) {
+  const { mealId } = req.params;
+  try {
+    const foods = await mealsService.getFoodsinMeal(Number(mealId));
+    return res.status(httpStatus.OK).send(foods);
+  } catch (error) {
+    if (error.name === "NotFoundError") {
+      return res.sendStatus(httpStatus.NOT_FOUND);
+    }
+    return res.sendStatus(httpStatus.BAD_REQUEST);
+  }
+}
+
+export async function postFoodinMeal(req: AuthenticatedRequest, res: Response) {
+  const { mealId } = req.params;
+  const body = req.body;
+  body.mealId = Number(mealId);
+  try {
+    await mealsService.postFoodinMeal(body);
+    return res.sendStatus(httpStatus.CREATED);
+  } catch (error) {
+    return res.sendStatus(httpStatus.BAD_REQUEST);
+  }
+}

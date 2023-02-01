@@ -36,7 +36,7 @@ CREATE TABLE "Meals" (
 CREATE TABLE "Mealfood" (
     "id" SERIAL NOT NULL,
     "mealId" INTEGER NOT NULL,
-    "foodId" INTEGER NOT NULL,
+    "name" TEXT NOT NULL,
     "quantity" DOUBLE PRECISION NOT NULL,
     "calories" DOUBLE PRECISION NOT NULL,
     "carb" DOUBLE PRECISION NOT NULL,
