@@ -42,10 +42,12 @@ export async function getFoodinMeal(req: AuthenticatedRequest, res: Response) {
 
 export async function postFoodinMeal(req: AuthenticatedRequest, res: Response) {
   const { mealId } = req.params;
+  const { userId } = req;
   const body = req.body;
   body.mealId = Number(mealId);
   try {
     await mealsService.postFoodinMeal(body);
+    await mealsService.updateDietinfo(Number(userId));
     return res.sendStatus(httpStatus.CREATED);
   } catch (error) {
     return res.sendStatus(httpStatus.BAD_REQUEST);
@@ -54,8 +56,10 @@ export async function postFoodinMeal(req: AuthenticatedRequest, res: Response) {
 
 export async function deleteMealFood(req: AuthenticatedRequest, res: Response) {
   const { mealfoodId } = req.params;
+  const { userId } = req;
   try {
     await mealsService.deleteMealfoodbyId(Number(mealfoodId));
+    await mealsService.updateDietinfo(Number(userId));
     return res.sendStatus(httpStatus.OK);    
   } catch (error) {
     if (error.name === "NotFoundError") {
@@ -67,8 +71,10 @@ export async function deleteMealFood(req: AuthenticatedRequest, res: Response) {
 
 export async function deleteMeal(req: AuthenticatedRequest, res: Response) {
   const { mealId } = req.params;
+  const { userId } = req;
   try {
     await mealsService.deleteMeal(Number(mealId));
+    await mealsService.updateDietinfo(Number(userId));
     return res.sendStatus(httpStatus.OK);    
   } catch (error) {
     if (error.name === "NotFoundError") {
