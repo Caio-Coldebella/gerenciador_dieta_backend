@@ -22,13 +22,25 @@ async function getFoodsinMeal(mealId: number) {
 async function postFoodinMeal(data: InsertFoodinMealType) {
   return mealsRepository.insertFoodinMeal(data);
 }
+
+async function deleteMealfoodbyId(id: number) {
+  return mealsRepository.deleteMealfoodbyId(id);
+}
+
+async function deleteMeal(id: number) {
+  await mealsRepository.deleteMealfoodbyMealId(id);
+  return mealsRepository.deleteMeal(id);
+}
+
 export type CreateMealParams = Pick<Meals, "name" >;
 
 const mealsService = {
   getMeals,
   postMeal,
   getFoodsinMeal,
-  postFoodinMeal
+  postFoodinMeal,
+  deleteMealfoodbyId,
+  deleteMeal
 };
 
 export default mealsService;

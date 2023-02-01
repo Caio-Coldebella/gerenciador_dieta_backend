@@ -36,11 +36,38 @@ async function insertFoodinMeal(data: InsertFoodinMealType) {
   });
 }
 
+async function deleteMealfoodbyId(id: number) {
+  return prisma.mealfood.delete({
+    where: {
+      id
+    }
+  });  
+}
+
+async function deleteMealfoodbyMealId(mealId: number) {
+  return prisma.mealfood.deleteMany({
+    where: {
+      mealId
+    }
+  });
+}
+
+async function deleteMeal(id: number) {
+  return prisma.meals.delete({
+    where: {
+      id
+    }
+  });
+}
+
 const mealsRepository = {
   findMeals,
   insertMeal,
   getFoodsinMeal,
-  insertFoodinMeal
+  insertFoodinMeal,
+  deleteMealfoodbyId,
+  deleteMealfoodbyMealId,
+  deleteMeal
 };
 
 export default mealsRepository;

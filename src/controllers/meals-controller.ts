@@ -51,3 +51,29 @@ export async function postFoodinMeal(req: AuthenticatedRequest, res: Response) {
     return res.sendStatus(httpStatus.BAD_REQUEST);
   }
 }
+
+export async function deleteMealFood(req: AuthenticatedRequest, res: Response) {
+  const { mealfoodId } = req.params;
+  try {
+    await mealsService.deleteMealfoodbyId(Number(mealfoodId));
+    return res.sendStatus(httpStatus.OK);    
+  } catch (error) {
+    if (error.name === "NotFoundError") {
+      return res.sendStatus(httpStatus.NOT_FOUND);
+    }
+    return res.sendStatus(httpStatus.BAD_REQUEST);
+  }
+}
+
+export async function deleteMeal(req: AuthenticatedRequest, res: Response) {
+  const { mealId } = req.params;
+  try {
+    await mealsService.deleteMeal(Number(mealId));
+    return res.sendStatus(httpStatus.OK);    
+  } catch (error) {
+    if (error.name === "NotFoundError") {
+      return res.sendStatus(httpStatus.NOT_FOUND);
+    }
+    return res.sendStatus(httpStatus.BAD_REQUEST);
+  }
+}
