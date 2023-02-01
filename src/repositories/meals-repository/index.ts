@@ -36,6 +36,19 @@ async function insertFoodinMeal(data: InsertFoodinMealType) {
   });
 }
 
+async function updateDietinfo(userId: number, totalcalories: number, totalcarb: number, totalprotein: number, totalfat: number) {
+  return prisma.dietinfo.update({
+    where: {
+      userId
+    }, data: {
+      totalcalories,
+      totalcarb,
+      totalprotein,
+      totalfat
+    }
+  });
+}
+
 async function deleteMealfoodbyId(id: number) {
   return prisma.mealfood.delete({
     where: {
@@ -65,6 +78,7 @@ const mealsRepository = {
   insertMeal,
   getFoodsinMeal,
   insertFoodinMeal,
+  updateDietinfo,
   deleteMealfoodbyId,
   deleteMealfoodbyMealId,
   deleteMeal

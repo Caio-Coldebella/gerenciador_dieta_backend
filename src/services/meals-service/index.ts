@@ -23,6 +23,20 @@ async function postFoodinMeal(data: InsertFoodinMealType) {
   return mealsRepository.insertFoodinMeal(data);
 }
 
+async function updateDietinfo(userId: number) {
+  const data = await mealsRepository.findMeals(userId);
+  const sum = { totalcalories: 0, totalcarb: 0, totalprotein: 0, totalfat: 0 };
+  for(let i=0; i<data.length; i++) {
+    for(let j=0; j<data[i].Mealfood.length; j++) {
+      sum.totalcalories += data[i].Mealfood[j].calories;
+      sum.totalcarb += data[i].Mealfood[j].carb;
+      sum.totalprotein += data[i].Mealfood[j].protein;
+      sum.totalfat += data[i].Mealfood[j].fat;
+    }
+  }
+  return mealsRepository.updateDietinfo(userId, Number(sum.totalcalories), Number(sum.totalcarb), Number(sum.totalprotein), Number(sum.totalfat));
+}
+
 async function deleteMealfoodbyId(id: number) {
   return mealsRepository.deleteMealfoodbyId(id);
 }
@@ -39,6 +53,7 @@ const mealsService = {
   postMeal,
   getFoodsinMeal,
   postFoodinMeal,
+  updateDietinfo,
   deleteMealfoodbyId,
   deleteMeal
 };
