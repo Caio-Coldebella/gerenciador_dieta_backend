@@ -7,7 +7,7 @@ import foodsService from "@/services/foods-service";
 export async function getFood(req: AuthenticatedRequest, res: Response) {
   const { foodname } = req.params;
   try {
-    const food = await foodsService.getFoodInDatabase(foodname);
+    const food = await foodsService.getFoodInDatabase(foodname.toLowerCase());
     return res.status(httpStatus.OK).send(food);
   } catch (error) {
     if(error.name === "NotFoundError") {
@@ -19,6 +19,7 @@ export async function getFood(req: AuthenticatedRequest, res: Response) {
 
 export async function postFood(req: AuthenticatedRequest, res: Response) {
   const body: CreateFoodParams = req.body;
+  body.name = body.name.toLowerCase();
   try {
     await foodsService.postFood(body);
     return res.sendStatus(httpStatus.CREATED);

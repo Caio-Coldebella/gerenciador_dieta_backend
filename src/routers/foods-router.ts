@@ -8,5 +8,6 @@ const foodsRouter = Router();
 foodsRouter
   .all("/*", authenticateToken)
   .get("/:foodname", getFood)
+  .get("/api/:foodname", getFood)
   .post("/", validateBody(foodsSchema), postFood);
 export { foodsRouter };
