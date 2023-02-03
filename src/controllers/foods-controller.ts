@@ -17,6 +17,25 @@ export async function getFood(req: AuthenticatedRequest, res: Response) {
   }
 }
 
+export async function getFoodInAPI(req: AuthenticatedRequest, res: Response) {
+  const { foodname } = req.params;
+  try {
+    const food = await foodsService.getFoodInDatabase(foodname.toLowerCase());
+    if(food.length>0) {
+      return res.status(httpStatus.OK).send(food);
+    }
+    const foodapi = await foodsService.getFoodInAPI(foodname.toLowerCase());
+    await foodsService.postFood(foodapi);
+    const resp = await foodsService.getFoodInDatabase(foodapi.name);
+    return res.status(httpStatus.OK).send(resp);
+  } catch (error) {
+    if(error.name === "NotFoundError") {
+      return res.sendStatus(httpStatus.NOT_FOUND);
+    }
+    return res.sendStatus(httpStatus.BAD_REQUEST);
+  }
+}
+
 export async function postFood(req: AuthenticatedRequest, res: Response) {
   const body: CreateFoodParams = req.body;
   body.name = body.name.toLowerCase();
