@@ -9,16 +9,9 @@ async function insertFood(data: CreateFoodParams) {
 }
 
 async function findFoodInDatabase(name: string) {
-  return prisma.food.findFirst({
-    where: {
-      name
-    }
-  });
+  const nametext = name+"%";
+  return prisma.$queryRaw`SELECT * FROM "Food" WHERE "Food".name::text LIKE ${nametext} LIMIT 5;`;
 }
-
-/*return prisma.$queryRaw`SELECT "Activities"."startsAt", "Activities"."endsAt" FROM "ActivitySubscription" JOIN "Activities" ON "ActivitySubscription"."activityId" = "Activities"."id"
-  WHERE "Activities".date::text LIKE ${datetext} AND "ActivitySubscription"."ticketId"=${ticketId};`;
- */
 
 const foodsRepositorie = {
   insertFood,
