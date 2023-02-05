@@ -6,23 +6,22 @@ services:
     ports:
       - 2345:5432
     env_file:
-      - .env.development
+      - ./.env.development
     volumes:
       - volume_banco:/var/lib/postgresql/data
 
   app_node:
-    build: .
+    build: ./
     container_name: app_node
     ports:
-      - 80:4000
+      - 4000:4000
     env_file:
-      - .env.development
+      - ./.env.development
     volumes:
-      - .:/usr/src
+      - /usr/src
       - /usr/src/node_modules
     entrypoint: dockerize -wait tcp://banco:5432 -timeout 20s docker-entrypoint.sh
-    command: "npm run dev:migration:run"
-    command: "npm run dev:migration:generate"
+    command: bash -c "npm run dev:migration:run && npm run dev:migration:generate && npm run dev"
     depends_on:
       - banco
 
